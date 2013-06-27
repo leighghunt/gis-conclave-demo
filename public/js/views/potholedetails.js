@@ -7,7 +7,7 @@ window.PotholeView = Backbone.View.extend({
     render: function () {
         $(this.el).html(this.template(this.model.toJSON()));
 
-
+var model = this.model;
 /*
     L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/100725/256/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>[.]',
@@ -18,7 +18,7 @@ window.PotholeView = Backbone.View.extend({
 var origin_CommunityBasemap = [-4020900, 19998100];
 var origin_WCCAerials = [-5099531.19635, 57089446.18];
 
-var resolutions_WCCAerials: [
+var resolutions_WCCAerials = [
             66.1459656252646,
             33.0729828126323,
             16.933367200067735,
@@ -30,7 +30,7 @@ var resolutions_WCCAerials: [
             0.26458386250105836,
             0.13229193125052918,
             0.06614596562526459
-        ]
+        ];
 
 var resolutions_CommunityBasemap = [
               4233.341800016934, 
@@ -59,8 +59,8 @@ var maxZoom_WCCAerials = 10;
     var crs = new L.Proj.CRS('EPSG:2193',
         '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
         {
-            origin: origin_CommunityBasemap,
-            resolutions: resolutions_CommunityBasemap
+            origin: origin_WCCAerials,
+            resolutions: resolutions_WCCAerials
         });
 
 //    var map = L.map(this.$('#map')[0]).setView ([-41.289926, 174.775172], 16);
@@ -74,19 +74,31 @@ var maxZoom_WCCAerials = 10;
         worldCopyJump: false
     });
 
-    var tileUrl_CommunityBasemap = 'http://services.arcgisonline.co.nz/arcgis/rest/services/Generic/newzealand/MapServer/tile/{z}/{y}/{x}',
-        attrib_CommunityBasemap = 'Eagle Technology Group Ltd And LINZ &copy; 2012',
+    var tileUrl_CommunityBasemap = 'http://services.arcgisonline.co.nz/arcgis/rest/services/Generic/newzealand/MapServer/tile/{z}/{y}/{x}';
+    var tileUrl_WCCAerials = 'http://gis.wcc.govt.nz/arcgis/rest/services/Basemap/Aerial_Photo/MapServer/tile/{z}/{y}/{x}';
+    var attrib_CommunityBasemap = 'Eagle Technology Group Ltd And LINZ &copy; 2012';
+    var attrib_WCCAerials = 'Wellington City Council &copy; 2012';
 
-        tilelayer = new L.TileLayer(tileUrl_CommunityBasemapnityBasemap, {
-            maxZoom: maxZoom_CommunityBasemap,
-            minZoom: minZoom_CommunityBasemap,
+    var tilelayer = new L.TileLayer(tileUrl_WCCAerials, {
+            maxZoom: maxZoom_WCCAerials,
+            minZoom: minZoom_WCCAerials,
             continuousWorld: true,
-            attribution: attrib_CommunityBasemap,
+            attribution: attrib_WCCAerials,
+	    tileSize: 512,
             tms: false
         });
 
     map.addLayer(tilelayer);
-    map.setView([-41.289926, 174.775172], 16);
+    map.setView([-41.289926, 174.775172], 8);
+
+
+    L.Icon.Default.imagePath = '../../lib/leaflet/images';
+    if(model.has('latlng'))
+    {
+        var marker = L.marker(model.get("latlng")).addTo(map);
+	map.panTo(model.get("latlng"));
+    }
+//map.locate({setView: true, maxZoom: 8});
 
     function onMapMouseMove(e) {
     //  console.log("xy: " + e.latlng);
@@ -94,8 +106,26 @@ var maxZoom_WCCAerials = 10;
 
     map.on('mousemove', onMapMouseMove);
 
+function onMapClick(e) {
+var marker = L.marker(e.latlng).addTo(map);
+    model.set("wkt",  e.latlng);
+}
 
 
+map.on('click', onMapClick);
+/*
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
+*/
 
 
 
