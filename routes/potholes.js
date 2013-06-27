@@ -95,13 +95,13 @@ var populateDB = function() {
     {
         name: "A1",
         description: "Manners Street ASB entrance",
-        latlng: "{\"lat\" : -41.290105, \"lng\" : 174.775593}",
+        latlng: {"lat" : -41.290105, "lng" : 174.775593},
         notes: "Damaged"
     },
     {
         name: "A2",
         description: "Manners Street National Bank entrance",
-        latlng: "{\"lat\" : -41.289579, \"lng\" : 174.775012}",
+        latlng: {"lat" : -41.289579, "lng" : 174.775012},
         notes: "Covered in slime"
     }];
  
