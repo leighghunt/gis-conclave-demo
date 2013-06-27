@@ -93,7 +93,7 @@ var maxZoom_WCCAerials = 10;
 
 
     L.Icon.Default.imagePath = '../../lib/leaflet/images';
-    if(model.has('latlng'))
+    if(false && model.has('latlng'))
     {
         var marker = L.marker(model.get("latlng")).addTo(map);
 	map.panTo(model.get("latlng"));
@@ -108,7 +108,7 @@ var maxZoom_WCCAerials = 10;
 
 function onMapClick(e) {
 var marker = L.marker(e.latlng).addTo(map);
-    model.set("wkt",  e.latlng);
+    model.set("latlng",  e.latlng);
 }
 
 
