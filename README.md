@@ -1,4 +1,4 @@
 gis-conclave-demo
 =================
 
-gis-conclave-demo
+Completely plagarised from https://github.com/ccoenraets/nodecellar
