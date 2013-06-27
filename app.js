@@ -1,13 +1,10 @@
-var express = require('express');
+var express = require('express'),
+    potholes = require('./routes/potholes');
  
 var app = express();
  
-app.get('/potholes', function(req, res) {
-    res.send([{name:'pothole1'}, {name:'pothole2'}]);
-});
-app.get('/potholes/:id', function(req, res) {
-    res.send({id:req.params.id, name: "The Name", description: "description", latlng: ""});
-});
+app.get('/potholes', potholes.findAll);
+app.get('/potholes/:id', potholes.findById);
  
 app.listen(3000);
 console.log('Listening on port 3000...');
