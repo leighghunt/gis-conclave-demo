@@ -5,12 +5,12 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
  
 var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('potholedb', server);
+db = new Db('potholedb', server, {safe: true});
  
 db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'potholedb' database");
-        db.collection('potholes', {strict:true}, function(err, collection) {
+        db.collection('potholes', {safe:true}, function(err, collection) {
             if (err) {
                 console.log("The 'potholes' collection doesn't exist. Creating it with sample data...");
                 populateDB();
@@ -55,6 +55,7 @@ exports.addPothole = function(req, res) {
 exports.updatePothole = function(req, res) {
     var id = req.params.id;
     var pothole = req.body;
+    delete pothole._id;
     console.log('Updating pothole: ' + id);
     console.log(JSON.stringify(pothole));
     db.collection('potholes', function(err, collection) {
