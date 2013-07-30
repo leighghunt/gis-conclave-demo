@@ -95,7 +95,7 @@ var maxZoom_GWRCAerials = 13;
 
 
     L.Icon.Default.imagePath = '../../lib/leaflet/images';
-    if(false && model.has('latlng'))
+    if(model.has('latlng') && typeof model.get('latlng') == 'object')
     {
         var marker = L.marker(model.get("latlng")).addTo(map);
 	map.panTo(model.get("latlng"));
