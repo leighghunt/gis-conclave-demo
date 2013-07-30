@@ -16,21 +16,23 @@ var model = this.model;
 */
 
 var origin_CommunityBasemap = [-4020900, 19998100];
-var origin_WCCAerials = [-5099531.19635, 57089446.18];
+var origin_GWRCAerials = [-4020900, 19998100];
 
-var resolutions_WCCAerials = [
-            66.1459656252646,
-            33.0729828126323,
-            16.933367200067735,
-            8.466683600033868,
-            4.233341800016934,
-            2.116670900008467,
-            1.0583354500042335,
-            0.5291677250021167,
-            0.26458386250105836,
-            0.13229193125052918,
-            0.06614596562526459
-        ];
+var resolutions_GWRCAerials = [
+               198.437896875794,
+               132.291931250529,
+                66.1459656252646,
+                26.4583862501058,
+                13.2291931250529,
+                 6.61459656252646,
+                 5.29167725002117,
+                 3.96875793751588,
+                 2.64583862501058,
+                 2.11667090000847,
+                 1.05833545000423,
+                 0.529167725002117,
+                 0.264583862501058,
+                 0.132291931250529]
 
 var resolutions_CommunityBasemap = [
               4233.341800016934, 
@@ -52,15 +54,15 @@ var resolutions_CommunityBasemap = [
             ];
 
 var minZoom_CommunityBasemap = 0;
-var minZoom_WCCAerials = 0;
+var minZoom_GWRCAerials = 0;
 var maxZoom_CommunityBasemap = 15;
-var maxZoom_WCCAerials = 10;
+var maxZoom_GWRCAerials = 13;
 
     var crs = new L.Proj.CRS('EPSG:2193',
         '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
         {
-            origin: origin_WCCAerials,
-            resolutions: resolutions_WCCAerials
+            origin: origin_GWRCAerials,
+            resolutions: resolutions_GWRCAerials
         });
 
 //    var map = L.map(this.$('#map')[0]).setView ([-41.289926, 174.775172], 16);
@@ -75,15 +77,15 @@ var maxZoom_WCCAerials = 10;
     });
 
     var tileUrl_CommunityBasemap = 'http://services.arcgisonline.co.nz/arcgis/rest/services/Generic/newzealand/MapServer/tile/{z}/{y}/{x}';
-    var tileUrl_WCCAerials = 'http://gis.wcc.govt.nz/arcgis/rest/services/Basemap/Aerial_Photo/MapServer/tile/{z}/{y}/{x}';
+    var tileUrl_GWRCAerials = 'http://mapping.gw.govt.nz/ArcGIS/rest/services/aerial_basemap3/MapServer/tile/{z}/{y}/{x}';
     var attrib_CommunityBasemap = 'Eagle Technology Group Ltd And LINZ &copy; 2012';
-    var attrib_WCCAerials = 'Wellington City Council &copy; 2012';
+    var attrib_GWRCAerials = 'Greater Wellington Regional Council &copy; 2012';
 
-    var tilelayer = new L.TileLayer(tileUrl_WCCAerials, {
-            maxZoom: maxZoom_WCCAerials,
-            minZoom: minZoom_WCCAerials,
+    var tilelayer = new L.TileLayer(tileUrl_GWRCAerials, {
+            maxZoom: maxZoom_GWRCAerials,
+            minZoom: minZoom_GWRCAerials,
             continuousWorld: true,
-            attribution: attrib_WCCAerials,
+            attribution: attrib_GWRCAerials,
 	    tileSize: 512,
             tms: false
         });
