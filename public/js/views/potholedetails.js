@@ -86,7 +86,7 @@ var maxZoom_GWRCAerials = 13;
             minZoom: minZoom_GWRCAerials,
             continuousWorld: true,
             attribution: attrib_GWRCAerials,
-	    tileSize: 512,
+	    tileSize: 256,
             tms: false
         });
 
